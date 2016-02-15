@@ -1,0 +1,30 @@
+{
+  "name": "django-gallery",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Formatc1/django-gallery.git"
+  },
+  "author": "Adam Gołąb",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/Formatc1/django-gallery/issues"
+  },
+  "homepage": "https://github.com/Formatc1/django-gallery#readme",
+  "devDependencies": {
+    "browser-sync": "~2.10.0",
+    "gulp": "~3.9.0",
+    "gulp-autoprefixer": "~3.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-sass": "~2.1.0",
+    "gulp-uglify": "^1.5.1",
+    "proxy-middleware": "~0.15.0",
+    "url": "~0.11.0"
+  }
+}
