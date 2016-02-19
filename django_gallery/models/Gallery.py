@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 
 def get_storage_path(instance, filename):
-    return join('gallery', instance.gallery.slug)
+    return join('gallery', instance.gallery.slug, filename)
 
 
 @python_2_unicode_compatible
