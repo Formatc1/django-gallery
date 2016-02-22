@@ -10,6 +10,12 @@ var notify = require('gulp-notify');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 
+var scripts = [
+  'static_dev/js/jquery-2.1.4.min.js',
+  'static_dev/js/bin/materialize.min.js',
+  'static_dev/js/scripts.js'
+];
+
 var AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
   'Android >= 4',
@@ -30,7 +36,7 @@ gulp.task('collectstatic', function () {
 });
 
 gulp.task('sass', function() {
-    return gulp.src('static_dev/scss/**/*.scss')
+    return gulp.src('static_dev/sass/style.scss')
     .pipe(sass())
     .on('error', notify.onError(function (error) {
       return 'Sass error: ' + error.formatted;
@@ -43,7 +49,7 @@ gulp.task('sass', function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src('static_dev/js/**/*.js')
+  return gulp.src(scripts)
   .pipe(concat('scripts.js'))
   .pipe(uglify())
   .on('error', notify.onError(function (error) {
@@ -53,7 +59,7 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('images', function() {
-  return gulp.src('static_dev/img/**/*')
+  return gulp.src('static_dev/images/**/*')
   .pipe(gulp.dest('static/img'));
 });
 
@@ -64,10 +70,10 @@ gulp.task('default', ['collectstatic', 'images', 'scripts', 'sass', 'runserver']
     serveStatic: ['.', './static']
   });
 
-  gulp.watch(['*/templates/**/*.html', '*/mustache/**/*.mustache'], reload);
+  gulp.watch(['*/templates/**/*.html'], reload);
   gulp.watch(['**/*.py'], reload);
-  gulp.watch(['static_dev/scss/**/*.scss'], ['sass']);
-  gulp.watch(['static_dev/img/**/*'], ['images']);
+  gulp.watch(['static_dev/sass/**/*.scss'], ['sass']);
+  gulp.watch(['static_dev/images/**/*'], ['images']);
   gulp.watch(['static_dev/js/**/*.js'], ['scripts']);
   // gulp.watch(['static/css/**/*.css'], reload);
   gulp.watch(['static/js/**/*.js'], reload);
