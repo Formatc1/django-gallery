@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models.Gallery import Gallery, Image
+from .models.gallery import Gallery, Image
 from guardian.admin import GuardedModelAdmin
 # from .models.UserGroup import Group
 

@@ -1,1 +1,9 @@
 @import 'materialize';
+
+html {
+  overflow-y: scroll;
+}
+
+#modal-login {
+  max-width: 500px;
+}

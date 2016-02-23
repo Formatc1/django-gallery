@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
@@ -37,10 +38,12 @@ gulp.task('collectstatic', function () {
 
 gulp.task('sass', function() {
     return gulp.src('static_dev/sass/style.scss')
+    .pipe(sourcemaps.init())
     .pipe(sass())
     .on('error', notify.onError(function (error) {
       return 'Sass error: ' + error.formatted;
     }))
+    .pipe(sourcemaps.write())
     .pipe(autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
     .pipe(gulp.dest('static/css'))
     .pipe(reload({
