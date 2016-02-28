@@ -1,4 +1,5 @@
 {% extends "main.html" %}
+{% load paginator %}
 
 {% block content %}
   <!-- TITLE -->
@@ -18,17 +19,17 @@
   
     <!-- GALLERIES -->
     <div class="row">
-      {% for i in '12345678' %}
+      {% for gallery in galleries %}
       <div class="col s6 m4 l3">
         <div class="card hoverable">
           <div class="card-image waves-effect waves-light">
-            <a href="gallery/name">
+            <a href="{% url 'gallery' gallery.slug %}">
               <img src="http://lorempixel.com/400/300/nature" alt="">
-            <h5 class="card-title">2015-08-07</h5>
+            <h5 class="card-title">{{ gallery.title }}</h5>
             </a>
           </div>
           <div class="card-content">
-            <p>Gallery description</p>
+            <p>{{ gallery.description }}</p>
           </div>
           <div class="card-action">
             <a href="#">Open Gallery</a>
@@ -42,13 +43,25 @@
     <div class="row">
       <div class="center-align">
         <ul class="pagination">
-          <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-          <li class="active"><a href="#!">1</a></li>
-          <li class="waves-effect"><a href="#!">2</a></li>
-          <li class="waves-effect"><a href="#!">3</a></li>
-          <li class="waves-effect"><a href="#!">4</a></li>
-          <li class="waves-effect"><a href="#!">5</a></li>
-          <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+          {% if galleries.has_previous %}
+            <li class="waves-effect"><a href="{% url 'galleries' galleries.previous_page_number %}"><i class="material-icons">chevron_left</i></a></li>
+          {% else %}
+            <li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
+          {% endif %}
+          {% for page in galleries.paginator.page_range|page_filter:galleries.number %}
+            {% if not page %}
+              <li class="disabled"><a href="#">...</a></li>
+            {% elif page == galleries.number %}
+              <li class="active waves-effect waves-light"><a href="{% url 'galleries' page %}">{{ page }}</a></li>
+            {% else %}
+              <li class="waves-effect"><a href="{% url 'galleries' page %}">{{ page }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if galleries.has_next %}
+            <li class="waves-effect"><a href="{% url 'galleries' galleries.next_page_number %}"><i class="material-icons">chevron_right</i></a></li>
+          {% else %}
+            <li class="disabled"><a href="#"><i class="material-icons">chevron_right</i></a></li>
+          {% endif %}
         </ul>
       </div>
     </div>
