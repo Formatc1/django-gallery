@@ -12,7 +12,7 @@ class GalleriesView(TemplateView):
         # TODO check permissions
 
         # TODO add configurable amount of galleries per page
-        paginator = Paginator(galleries_list, 1)
+        paginator = Paginator(galleries_list, 12)
 
         try:
             page = self.kwargs.get('page')

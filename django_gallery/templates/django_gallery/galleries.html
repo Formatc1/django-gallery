@@ -24,6 +24,7 @@
         <div class="card hoverable">
           <div class="card-image waves-effect waves-light">
             <a href="{% url 'gallery' gallery.slug %}">
+              <!-- TODO: add gallery image -->
               <img src="http://lorempixel.com/400/300/nature" alt="">
             <h5 class="card-title">{{ gallery.title }}</h5>
             </a>
@@ -40,6 +41,7 @@
     </div>
 
     <!-- PAGINATION -->
+    {% if galleries.paginator.num_pages > 1 %}
     <div class="row">
       <div class="center-align">
         <ul class="pagination">
@@ -65,4 +67,5 @@
         </ul>
       </div>
     </div>
+    {% endif %}
 {% endblock content %}
