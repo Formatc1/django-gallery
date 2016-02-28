@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+{% load i18n %}
+
+{% block content %}
+  <div class="row">
+    <h1 class="col s12">{% trans "Create new account" %}</h1>
+  </div>
+
+  <form action="{% url 'registration_register' %}" method="POST" class="section">
+    <div class="row">
+      <div class="input-field col s12">
+        {{ form.username }}
+        {{ form.username.label_tag }}
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="input-field col s12">
+        {{ form.email }}
+        {{ form.email.label_tag }}
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="input-field col s12 m6">
+        {{ form.password1 }}
+        {{ form.password1.label_tag }}
+      </div>
+      <div class="input-field col s12 m6">
+        {{ form.password2 }}
+        {{ form.password2.label_tag }}
+      </div>
+    </div>
+
+    <div class="row center-align">
+      <button type="submit" name="submit" class="btn waves-effect waves-light">
+        {% trans "Create account" %}
+        <i class="material-icons right">person</i>
+      </button>
+    </div>
+  </form>
+
+{% endblock content %}

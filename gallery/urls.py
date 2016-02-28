@@ -19,5 +19,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('django_gallery.urls')),
+    url(r'', include('registration.backends.simple.urls')),
+    url(r'', include('django_gallery.urls')),
 ]
