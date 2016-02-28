@@ -10,6 +10,7 @@ var exec = require('child_process').exec;
 var notify = require('gulp-notify');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+var todo = require('gulp-todo');
 
 var scripts = [
   'static_dev/js/jquery-2.1.4.min.js',
@@ -66,19 +67,28 @@ gulp.task('images', function() {
   .pipe(gulp.dest('static/img'));
 });
 
-gulp.task('default', ['collectstatic', 'images', 'scripts', 'sass', 'runserver'], function () {
+gulp.task('todo', function() {
+  return gulp.src(['**/*.+(js|css|py|scss|html)', '!./node_modules/**'])
+  .pipe(todo({
+    fileName: 'TODO.md'
+  }))
+  .pipe(gulp.dest('./'));
+});
+
+gulp.task('default', ['collectstatic', 'images', 'scripts', 'sass', 'todo', 'runserver'], function () {
   browserSync({
     notify: false,
     proxy: 'http://localhost:8000/',
     serveStatic: ['.', './static']
   });
 
-  gulp.watch(['*/templates/**/*.html'], reload);
-  gulp.watch(['**/*.py'], reload);
-  gulp.watch(['static_dev/sass/**/*.scss'], ['sass']);
+  gulp.watch(['static_dev/sass/**/*.scss'], ['todo', 'sass']);
   gulp.watch(['static_dev/images/**/*'], ['images']);
-  gulp.watch(['static_dev/js/**/*.js'], ['scripts']);
+  gulp.watch(['static_dev/js/**/*.js'], ['todo', 'scripts']);
   // gulp.watch(['static/css/**/*.css'], reload);
+  gulp.watch(['*/templates/**/*.html'], ['todo']);
+  gulp.watch(['*/templates/**/*.html'], reload);
+  gulp.watch(['**/*.py'], ['todo', reload]);
   gulp.watch(['static/js/**/*.js'], reload);
   gulp.watch(['static/img/**/*'], reload);
 });

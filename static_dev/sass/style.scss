@@ -4,6 +4,12 @@ html {
   overflow-y: scroll;
 }
 
+.fab {
+  bottom: 50px;
+  position: fixed;
+  right: 40px;
+}
+
 #modal-login {
   max-width: 500px;
 }
