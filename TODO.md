@@ -6,9 +6,10 @@
 | django_gallery/views.py | 37 | check permissions to photos
 | django_gallery/views.py | 38 | add configurable amount of photos per page
 | django_gallery/templates/django_gallery/galleries.html | 27 | add gallery image
-| django_gallery/templates/django_gallery/gallery.html | 16 | get actual page to breadcrumbs
-| django_gallery/templates/django_gallery/gallery.html | 29 | add image src
-| django_gallery/templates/django_gallery/gallery.html | 34 | add image name
+| django_gallery/templates/django_gallery/gallery.html | 15 | back to page with this gallery
+| django_gallery/templates/django_gallery/gallery.html | 17 | get actual page to breadcrumbs
+| django_gallery/templates/django_gallery/gallery.html | 30 | add image src
+| django_gallery/templates/django_gallery/gallery.html | 35 | add image name
 | static/admin/js/admin/DateTimeShortcuts.js | 178 | IE returns wrong value for findPosX when in rtl mode
 | static/admin/js/admin/DateTimeShortcuts.js | 316 | IE returns wrong value for findPosX when in rtl mode
 | static/admin/js/vendor/jquery/jquery.js | 3768 | Now that all calls to _data and _removeData have been replaced

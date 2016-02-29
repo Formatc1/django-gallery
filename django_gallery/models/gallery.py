@@ -6,6 +6,9 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+
 
 def get_storage_path(instance, filename):
     return join('gallery', instance.gallery.slug, filename)
@@ -18,9 +21,18 @@ class Image(models.Model):
         User, related_name='images', verbose_name=_('creator'))
     date_added = models.DateTimeField(_('date published'), default=now)
     original_file = models.ImageField(_('image'), upload_to=get_storage_path)
-    thumbnail = models.ImageField(upload_to=get_storage_path, editable=False)
-    large_thumbnail = models.ImageField(
-        upload_to=get_storage_path, editable=False)
+    thumbnail = ImageSpecField(
+        source='original_file',
+        processors=[ResizeToFill(300, 200)],
+        format='JPEG',
+        options={'quality': 60}
+    )
+    large_thumbnail = ImageSpecField(
+        source='original_file',
+        processors=[ResizeToFill(1920, 1080)],
+        format='JPEG',
+        options={'quality': 90}
+    )
     gallery = models.ForeignKey(
         'Gallery',
         related_name='images',
@@ -33,10 +45,6 @@ class Image(models.Model):
         permissions = (
             ('view_image', _('Can view image')),
         )
-
-    def save(self, *args, **kwargs):
-
-        return super(Gallery, self).save(*args, **kwargs)
 
     def __str__(self):
         return '%s/%s' % (self.gallery, self.original_file.name)
