@@ -1,4 +1,4 @@
-from os.path import join
+from os.path import join, basename
 from django.db import models
 from django.utils.text import slugify
 from django.utils.timezone import now
@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import ResizeToFill, ResizeToFit
 
 
 def get_storage_path(instance, filename):
@@ -29,7 +29,7 @@ class Image(models.Model):
     )
     large_thumbnail = ImageSpecField(
         source='original_file',
-        processors=[ResizeToFill(1920, 1080)],
+        processors=[ResizeToFit(1920, 1080)],
         format='JPEG',
         options={'quality': 90}
     )
@@ -45,6 +45,10 @@ class Image(models.Model):
         permissions = (
             ('view_image', _('Can view image')),
         )
+
+    @property
+    def filename(self):
+        return basename(self.original_file.name)
 
     def __str__(self):
         return '%s/%s' % (self.gallery, self.original_file.name)

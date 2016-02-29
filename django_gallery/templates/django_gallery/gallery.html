@@ -13,9 +13,9 @@
       <nav>
         <div class="col s12">
           <!-- TODO: back to page with this gallery -->
-          <a href="/" class="breadcrumb">Home</a>
+          <a href="{% url 'galleries' %}" class="breadcrumb">Home</a>
           <!-- TODO: get actual page to breadcrumbs -->
-          <a href="#" class="breadcrumb">Gallery</a>
+          <a href="{% url 'gallery' gallery.slug %}" class="breadcrumb">{{ gallery }}</a>
         </div>
       </nav>
     </div>
@@ -26,14 +26,12 @@
       <div class="col s6 m4 l3">
         <div class="card hoverable">
           <div class="card-image waves-effect waves-light">
-            <a href="#">
-            <!-- TODO: add image src -->
-              <img src="http://lorempixel.com/400/300/nature" alt="">
+            <a href="{{ image.large_thumbnail.url }}">
+              <img src="{{ image.thumbnail.url }}" alt="">
             </a>
           </div>
           <div class="card-content">
-            <!-- TODO: add image name -->
-            <p>{{ image }}</p>
+            <p>{{ image.filename }}</p>
           </div>
         </div>
       </div>
@@ -68,10 +66,5 @@
       </div>
     </div>
     {% endif %}
-
-    
-    <div class="fab">
-      <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-    </div>
 
 {% endblock content %}

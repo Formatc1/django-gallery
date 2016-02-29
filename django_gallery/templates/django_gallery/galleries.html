@@ -25,7 +25,7 @@
           <div class="card-image waves-effect waves-light">
             <a href="{% url 'gallery' gallery.slug %}">
               <!-- TODO: add gallery image -->
-              <img src="http://lorempixel.com/400/300/nature" alt="">
+              <img src="{{ gallery.gallery_image.thumbnail.url }}" alt="">
             <h5 class="card-title">{{ gallery.title }}</h5>
             </a>
           </div>

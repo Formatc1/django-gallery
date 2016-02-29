@@ -1,11 +1,11 @@
 from django.contrib import admin
 from .models.gallery import Gallery, Image
+from .forms import GalleryForm
 from guardian.admin import GuardedModelAdmin
-# from .models.UserGroup import Group
 
 
 class GalleryAdmin(GuardedModelAdmin):
-    pass
+    form = GalleryForm
 
 
 class ImageAdmin(GuardedModelAdmin):
