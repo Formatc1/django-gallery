@@ -67,4 +67,46 @@
     </div>
     {% endif %}
 
+    {{ tmp }}
+
 {% endblock content %}
+
+{% block modals %}
+
+<!-- TODO: check permissions to upload to gallery -->
+{% if user.is_authenticated %}
+  
+  <div class="fab">
+    <a href="#modal-upload" class="btn-floating btn-large waves-effect waves-light red modal-trigger"><i class="material-icons">add</i></a>
+  </div>
+
+  <div id="modal-upload" class="modal">
+    <div class="modal-content">
+      <div class="row">
+        <h5>UPLOAD IMAGES</h5>
+      </div>
+      <form action="{% url 'gallery' gallery.slug %}" method="POST" enctype="multipart/form-data" class="section">
+        {% csrf_token %}
+        <div class="row">
+          <div class="file-field input-field col s12">
+            <div class="btn">
+              <span>File</span>
+              <input type="file" name="images" accept=".jpg,.jpeg,.png" multiple>
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="Upload one or more files">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="center-align">
+            <button type="submit" class="btn waves-effect waves-light">Upload</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endif %}
+
+{% endblock modals %}

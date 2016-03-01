@@ -1,7 +1,8 @@
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import get_object_or_404
-from .models.gallery import Gallery
+from django.shortcuts import get_object_or_404, redirect
+from .models.gallery import Gallery, Image
+from .forms import ImageForm
 
 
 class GalleriesView(TemplateView):
@@ -30,9 +31,13 @@ class GalleriesView(TemplateView):
 class GalleryView(TemplateView):
     template_name = 'django_gallery/gallery.html'
 
+    def get_object(self):
+        obj = get_object_or_404(Gallery, slug=self.kwargs.get('slug'))
+        return obj
+
     def get_context_data(self, **kwargs):
         context = super(GalleryView, self).get_context_data(**kwargs)
-        gallery = get_object_or_404(Gallery, slug=self.kwargs.get('slug'))
+        gallery = self.get_object()
 
         # TODO check permissions to photos
         # TODO add configurable amount of photos per page
@@ -50,4 +55,12 @@ class GalleryView(TemplateView):
         context['images'] = images
         return context
 
-        return context
+    def post(self, request, *args, **kwargs):
+        gallery = self.get_object()
+        images = [Image(
+            creator=self.request.user,
+            gallery=gallery,
+            original_file=image
+            ) for image in self.request.FILES.getlist('images')]
+        Image.objects.bulk_create(images)
+        return redirect('gallery', slug=self.kwargs.get('slug'))
