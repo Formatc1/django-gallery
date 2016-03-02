@@ -13,4 +13,3 @@ class ImageAdmin(GuardedModelAdmin):
 
 admin.site.register(Gallery, GalleryAdmin)
 admin.site.register(Image, ImageAdmin)
-# admin.site.register(Group)

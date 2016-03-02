@@ -2,7 +2,7 @@ from django.views.generic import TemplateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, redirect
 from .models.gallery import Gallery, Image
-from .forms import ImageForm
+from guardian.shortcuts import get_objects_for_user
 
 
 class GalleriesView(TemplateView):
@@ -10,8 +10,11 @@ class GalleriesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(GalleriesView, self).get_context_data(**kwargs)
-        galleries_list = Gallery.objects.all()
-        # TODO check permissions to galleries
+        galleries_list = get_objects_for_user(
+            user=self.request.user,
+            perms='view_gallery',
+            klass=Gallery.objects.all()
+        )
 
         # TODO add configurable amount of galleries per page
         paginator = Paginator(galleries_list, 12)
@@ -32,6 +35,7 @@ class GalleryView(TemplateView):
     template_name = 'django_gallery/gallery.html'
 
     def get_object(self):
+        # TODO check permissions to gallery or return 403
         obj = get_object_or_404(Gallery, slug=self.kwargs.get('slug'))
         return obj
 
@@ -39,9 +43,13 @@ class GalleryView(TemplateView):
         context = super(GalleryView, self).get_context_data(**kwargs)
         gallery = self.get_object()
 
-        # TODO check permissions to photos
+        images_list = get_objects_for_user(
+            user=self.request.user,
+            perms='view_image',
+            klass=gallery.images.all()
+        )
         # TODO add configurable amount of photos per page
-        paginator = Paginator(gallery.images.all(), 12)
+        paginator = Paginator(images_list, 12)
 
         try:
             page = self.kwargs.get('page')

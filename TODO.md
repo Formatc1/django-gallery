@@ -1,10 +1,9 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| django_gallery/views.py | 14 | check permissions to galleries
-| django_gallery/views.py | 16 | add configurable amount of galleries per page
-| django_gallery/views.py | 42 | check permissions to photos
-| django_gallery/views.py | 43 | add configurable amount of photos per page
+| django_gallery/views.py | 19 | add configurable amount of galleries per page
+| django_gallery/views.py | 38 | check permissions to gallery or return 403
+| django_gallery/views.py | 51 | add configurable amount of photos per page
 | django_gallery/templates/django_gallery/galleries.html | 27 | add gallery image
 | django_gallery/templates/django_gallery/gallery.html | 15 | back to page with this gallery
 | django_gallery/templates/django_gallery/gallery.html | 17 | get actual page to breadcrumbs
